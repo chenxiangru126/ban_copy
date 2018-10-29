@@ -94,10 +94,10 @@
                                 if(a==1){  
                                     url= location.protocol+'//'+location.hostname
 
-                                    +'/mall/invoice_order/payForcopyright.do?number='+number+'&money=99'+'&payWay=1'+'&token='+this.token+'&fromType=2'+'&orderId='+this.orderId;
+                                    +'/mall/invoice_order/payForcopyright.do?number='+number+'&money=0.01'+'&payWay=1'+'&token='+this.token+'&fromType=2'+'&orderId='+this.orderId;
                                 }else if(a==2){
                                     url= location.protocol+'//'+location.hostname
-                                        +'/mall/invoice_order/payForcopyright.do?number='+number+'&money=99'+'&payWay=2'+'&token='+this.token+'&fromType=2'+'&orderId='+this.orderId;
+                                        +'/mall/invoice_order/payForcopyright.do?number='+number+'&money=0.01'+'&payWay=2'+'&token='+this.token+'&fromType=2'+'&orderId='+this.orderId;
 
                                 }
                                 iosObject.showCheckOrderBtn(location.origin+'/index.html#/continue')

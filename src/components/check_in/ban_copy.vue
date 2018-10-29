@@ -58,9 +58,10 @@
             </div >
              <p class="c2_cxr" v-show="goodt_n=='其它'" ><input type="text" placeholder="请输入专业名称" v-model="other_1"></p>
             <span  class="text" id="text_text">填写（120字以内）</span>
-             <textarea name="" style="text-indent:2rem; height:98px; margin-top:10px;color:#000;background:#F1EFEB" @click="text_change" v-model="art_text">
-  
+             <textarea name="" @input='watchText' style="text-indent:2rem; height:98px; margin-top:10px;color:#000;background:#F1EFEB" v-bind:maxlength="120" @click="text_change" v-model="art_text">
+                 
              </textarea>
+                <span v-show='showCount' style='position: absolute;right: 0;'>({{textCount}}/120)</span>
              </div>    
 
              </div>
@@ -202,7 +203,7 @@ export default {
         // 储存的信息
          art_name:null, // 存证作品名
          art_person:null, //存证者
-         art_text:null,// 存证的描述
+         art_text:'',// 存证的描述
          url_list_one:null, //上传图片一
          url_list_two:null,//上传图片二
          url_list_three:null,//上传图片三
@@ -223,8 +224,9 @@ export default {
         
         other_cxr:false,//其它输入框
         other_1:null,//其它描述
-        disabled:false
-               
+        disabled:false,
+        textCount:120,
+        showCount:false       
         }
     },
      components: {
@@ -489,6 +491,13 @@ export default {
         },
         text_change(){
             $('#text_text').hide()
+            this.showCount = true
+            // $('#text_show').show()
+            
+        },
+        watchText(){
+            var textVal = this.art_text.length;
+            this.textCount = 120 - textVal;
         },
         //提交存证信息
         art_btn(){

@@ -19,6 +19,7 @@
                          <P class="list_rt">
                             <img src="../../static/images/dengji_zhong.png" alt="" v-show="item.status == 1 ">
                             <img src="../../static/images/dengji_guo.png" alt="" v-show="item.status == 0 ">
+                            <span class='state_text' style='color:#cb383f;font-size: 14px; margin-top: -2.225rem;' v-show="item.status == 2||item.status == 7||item.status == 8">版权登记失败</span>
                              <span style="color:#8B8B8B;font-size:12px;" v-show="item.status == 0 ">{{item.over_time}}</span>
                         </P>
                         </div>
@@ -99,10 +100,10 @@ export default {
                 let  number = item.number
                 let name = item.name
                 this.$router.push('/ban_cun_zhan?number='+number+'&name='+name)
-            }else if(state == 2){
+            }else if(state == 2 || state == 7 ||state == 8){
                let  number = item.number
                 let name = item.name
-                this.$router.push('/fail?number='+number+'&name='+name)
+                this.$router.push('/fail?number='+number+'&name='+name+'&status='+state)
 
             }else if(state == 6){//新添加的
                 const html=`<div class='p-b'>

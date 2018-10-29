@@ -87,12 +87,12 @@
                                 //去支付
                                if(a==1){
                                     url= location.protocol+'//'+location.hostname
-                                    +'/mall/invoice_order/payForcopyright.do?number='+name+'&money=1'+'&payWay=1'+'&token='+this.token+'&fromType=1'+'&orderId='+this.orderId;
+                                    +'/mall/invoice_order/payForcopyright.do?number='+name+'&money=0.01'+'&payWay=1'+'&token='+this.token+'&fromType=1'+'&orderId='+this.orderId;
                                     window.location.href=url;
                                     iosObject.showCheckOrderBtn(location.origin+'/index.html#/nextBlank')
                                 }else if(a==2){
                                     url= location.protocol+'//'+location.hostname
-                                        +'/mall/invoice_order/payForcopyright.do?number='+name+'&money=1'+'&payWay=2'+'&token='+this.token+'&fromType=1'+'&orderId='+this.orderId;
+                                        +'/mall/invoice_order/payForcopyright.do?number='+name+'&money=0.01'+'&payWay=2'+'&token='+this.token+'&fromType=1'+'&orderId='+this.orderId;
                                     window.location.href=url; 
                                     iosObject.showCheckOrderBtn(location.origin+'/index.html#/nextBlank')//iOS放在微信上来
                                 }

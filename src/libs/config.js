@@ -3,7 +3,7 @@ import {isAndroidOrIos} from './tools';
 const get_usr_info=resolve=>{
     if(isAndroidOrIos()==-1||/localhost/.test(location.href)){
         common_param = {
-            token: "",//测试时需要添加用户token
+            token: "096327b8-1cef-4103-bc6d-1dde3d594be300",//测试时需要添加用户token：096327b8-1cef-4103-bc6d-1dde3d594be300
             
         };
     }else{
