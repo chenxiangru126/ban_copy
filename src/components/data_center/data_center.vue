@@ -214,6 +214,7 @@ import {format, trim } from '../../libs/tools';
 import { DatetimePicker } from 'mint-ui';
 Vue.component(DatetimePicker.name, DatetimePicker);
     export default {
+         
           mounted(){
              let number = this.$route.query.number
              
@@ -226,15 +227,16 @@ Vue.component(DatetimePicker.name, DatetimePicker);
 
             this.util.ajax.get('/admin/authCopyright/getDicList.do').then(e=>{
                  let list =e.data.a2.result
-                  this.listBan = list
+                 this.listBan = list
                  let list_two = e.data.a3.result
-                  this.listgui = list_two
-                  let list_three = e.data.a4.result
-                   this.list_check = list_three
+                 this.listgui = list_two
+                 let list_three = e.data.a4.result
+                 this.list_check = list_three
 
             })
        
         },
+       
         data() {
             return {
                value: new Date(),          //定义显示时间
@@ -310,6 +312,9 @@ Vue.component(DatetimePicker.name, DatetimePicker);
                url:null,//缩略图显示路径
                id:null,
                id_gui:null,
+               arr:'',
+               arr_name:'',
+               status:null
             }
         },
         watch:{  
@@ -352,6 +357,8 @@ Vue.component(DatetimePicker.name, DatetimePicker);
 　　　　　}, 
         created() {
             this.initData();
+            
+             
         },
       
 
@@ -385,10 +392,39 @@ Vue.component(DatetimePicker.name, DatetimePicker);
 
         initData(){
           /*   this.util.ajax.post('/admin/authCopyright/getDicList.do').then(e=>{
-             
-
 
             }) */
+            
+            let number = this.$route.query.number
+             this.util.ajax.get('/admin/authCopyright/dengjiFailures_back.do?number='+number).then(e=>{
+                 
+                 if(e.code == 200){
+                     this.status = e.data.status
+                     
+                     if(this.status == 1){
+                        this.id_gui = e.data.aut_acp_method
+                        this.ban_right = e.data.aut_acp_method_exe
+                        this.get_ban_name = e.data.aut_acp_method_name
+                        this.ban_gui = e.data.aut_bel_method_exp
+                        this.id = e.data.aut_bel_method_id
+                        this.gui_ban_name = e.data.aut_bel_method_name
+                        this.arr = e.data.aut_hold
+                        this.arr_name = e.data.aut_hold_name
+                        this.ban_yong = e.data.aut_hold_exp
+                        this.creat_data = e.data.creat_date
+                        this.goodt_n = e.data.creat_place
+                        this.ban_yi = e.data.create_intention
+                        this.ban_zuo = e.data.pro_original
+                        this.goodt_n_two = e.data.published_place
+                        this.state_name = e.data.published_status_name
+                        this.creat_data_two = e.data.published_time
+                        // this.status = e.data.status
+                     }else{
+                        
+                     }
+                     
+                 }
+            })
         },
         goodsfl(){
             // 这里是选择地址
@@ -623,9 +659,11 @@ Vue.component(DatetimePicker.name, DatetimePicker);
         // 资料提交
          go_next(){
             //  在提交请求处进行checked判断
-               
-                let arr ='';
-                let arr_name ='';
+                
+                this.arr ='';
+                let arr = this.arr
+                this.arr_name ='';
+                let arr_name = this.arr_name
                  $('.__input').each(function(){
                     if($(this).is(':checked')){
                          let id = $(this).attr('id')
@@ -712,18 +750,41 @@ Vue.component(DatetimePicker.name, DatetimePicker);
                   let _p = {
                  paramStr:paramStr,
                  type:2
-                } 
-                   this.util.ajax.post('/admin/copyrightTemp/save.do',_p).then(e=>{
+                }  
+                if(this.status==1){
+                    this.util.ajax.post('/admin/copyrightTemp/save.do',_p).then(e=>{
                    
-                     if(e.code ==200){
-                        this.temp_id = e.data.temp_id
-                        sessionStorage.setItem('copyright_temp_id_p',this.temp_id);
-                        this.$router.push('/pay_money?name='+pro_name+'&number='+number)
-                     }else{
-                        this.Toast('信息保存异常')
-                     } 
+                        if(e.code ==200){
+                            this.temp_id = e.data.temp_id
+                            // sessionStorage.setItem('copyright_temp_id_p',this.temp_id);
+                            this.util.ajax.get('/mall/invoice_order/yuPayOrder.do?temp_id='+this.temp_id).then(e=>{
+                                if(e.code == 200){
+                                    this.orderId = e.data.orderId
+                                    sessionStorage.setItem('copyright_p_orderId',this.orderId);
+                                    
+                                    this.$router.push('/success');
+                                }
+                            })
+                            
+                        }else{
+                            this.Toast('信息保存异常')
+                        } 
                 
-              })
+                    })
+                }else{
+                     this.util.ajax.post('/admin/copyrightTemp/save.do',_p).then(e=>{
+                   
+                        if(e.code ==200){
+                            this.temp_id = e.data.temp_id
+                            sessionStorage.setItem('copyright_temp_id_p',this.temp_id);
+                            this.$router.push('/pay_money?name='+pro_name+'&number='+number)
+                        }else{
+                            this.Toast('信息保存异常')
+                        } 
+                
+                    })
+                }
+                  
                
 
          }

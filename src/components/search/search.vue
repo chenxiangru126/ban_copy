@@ -32,7 +32,7 @@ export default {
              return false
          }else{
              let _p ={
-                 number
+                 number 
              }
              this.util.ajax.get('/admin/authCopyright/getCopyrightDataDetails.do?number='+number).then(e=>{
 
